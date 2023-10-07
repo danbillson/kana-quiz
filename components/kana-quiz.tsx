@@ -2,12 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Hiragana, hiraganaQuestions } from "@/lib/kana";
-import { useKanaValue } from "@/lib/state";
+import { useKanaStore } from "@/lib/state";
 import { shuffle } from "@/lib/utils";
 import { KanaCard } from "./kana-card";
 
 export function KanaQuiz() {
-  const selectedKana = useKanaValue();
+  const selectedKana = useKanaStore((state) => state.kana);
 
   const kanaQuestions = selectedKana.reduce(
     (acc, key) => ({ ...acc, ...hiraganaQuestions[key] }),
