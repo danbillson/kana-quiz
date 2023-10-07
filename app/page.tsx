@@ -4,16 +4,16 @@ import { KanaQuiz } from "@/components/kana-quiz";
 import KanaSelect from "@/components/kana-select";
 import { Button } from "@/components/ui/button";
 import {
-  mainHiraganaCategories,
-  dakutenHiraganaCategories,
   combinationHiraganaCategories,
+  dakutenHiraganaCategories,
+  mainHiraganaCategories,
 } from "@/lib/kana";
-import { useKanaValue } from "@/lib/state";
+import { useKanaStore } from "@/lib/state";
 import { useState } from "react";
 
 export default function Home() {
   const [quiz, setQuiz] = useState(false);
-  const selectedKana = useKanaValue();
+  const selectedKana = useKanaStore((state) => state.kana);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
