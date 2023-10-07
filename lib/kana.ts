@@ -5,6 +5,7 @@ export const hiraganaA = {
   e: "え",
   o: "お",
 } as const;
+
 export const hiraganaK = {
   ka: "か",
   ki: "き",
@@ -12,6 +13,7 @@ export const hiraganaK = {
   ke: "け",
   ko: "こ",
 } as const;
+
 export const hiraganaS = {
   sa: "さ",
   shi: "し",
@@ -19,6 +21,7 @@ export const hiraganaS = {
   se: "せ",
   so: "そ",
 } as const;
+
 export const hiraganaT = {
   ta: "た",
   chi: "ち",
@@ -26,6 +29,7 @@ export const hiraganaT = {
   te: "て",
   to: "と",
 } as const;
+
 export const hiraganaN = {
   na: "な",
   ni: "に",
@@ -33,6 +37,7 @@ export const hiraganaN = {
   ne: "ね",
   no: "の",
 } as const;
+
 export const hiraganaH = {
   ha: "は",
   hi: "ひ",
@@ -40,6 +45,7 @@ export const hiraganaH = {
   he: "へ",
   ho: "ほ",
 } as const;
+
 export const hiraganaM = {
   ma: "ま",
   mi: "み",
@@ -47,7 +53,9 @@ export const hiraganaM = {
   me: "め",
   mo: "も",
 } as const;
+
 export const hiraganaY = { ya: "や", yu: "ゆ", yo: "よ" } as const;
+
 export const hiraganaR = {
   ra: "ら",
   ri: "り",
@@ -55,7 +63,9 @@ export const hiraganaR = {
   re: "れ",
   ro: "ろ",
 } as const;
+
 export const hiraganaW = { wa: "わ", wo: "を" } as const;
+
 export const hiraganaN2 = { n: "ん" } as const;
 
 export const hiraganaG = {
@@ -139,8 +149,6 @@ export const hiraganaRya = {
   ryu: "りゅ",
   ryo: "りょ",
 } as const;
-
-// export type Hiragana = (typeof hiragana)[keyof typeof hiragana];
 
 export const mainHiraganaCategories = {
   a: "あ",
