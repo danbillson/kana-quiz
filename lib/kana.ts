@@ -228,6 +228,7 @@ export const hiragana = {
 export type HiraganaCategories = typeof hiraganaCategories;
 export type HiraganaCategory = keyof HiraganaCategories;
 export type Hiragana = (typeof hiragana)[keyof typeof hiragana];
+export type Romaji = keyof typeof hiragana;
 
 export const hiraganaQuestions = {
   a: hiraganaA,

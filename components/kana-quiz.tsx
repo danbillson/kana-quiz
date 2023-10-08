@@ -1,12 +1,13 @@
 "use client";
 
+import { KanaCard } from "@/components/kana-card";
 import { Button } from "@/components/ui/button";
-import { Hiragana, hiraganaQuestions } from "@/lib/kana";
+import { hiraganaQuestions, type Hiragana, type Romaji } from "@/lib/kana";
 import { useKanaStore } from "@/lib/state";
 import { shuffle } from "@/lib/utils";
-import { KanaCard } from "./kana-card";
 
 export function KanaQuiz() {
+  const nextStage = useKanaStore((state) => state.nextStage);
   const selectedKana = useKanaStore((state) => state.kana);
 
   const kanaQuestions = selectedKana.reduce(
@@ -16,7 +17,7 @@ export function KanaQuiz() {
 
   const questions = Object.entries(kanaQuestions).map(([answer, kana]) => ({
     kana: kana as Hiragana,
-    answer,
+    answer: answer as Romaji,
   }));
 
   const shuffledQuestions = shuffle(questions);
@@ -29,7 +30,9 @@ export function KanaQuiz() {
         ))}
       </div>
 
-      <Button variant="default">Submit</Button>
+      <Button variant="default" onClick={nextStage}>
+        Submit
+      </Button>
     </>
   );
 }
