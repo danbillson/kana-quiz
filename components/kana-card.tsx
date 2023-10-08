@@ -1,17 +1,21 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Hiragana } from "@/lib/kana";
-import { Input } from "./ui/input";
-import { FocusEvent, useRef, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Hiragana, Romaji } from "@/lib/kana";
+import { useKanaStore } from "@/lib/state";
 import { cn } from "@/lib/utils";
+import { FocusEvent, useRef, useState } from "react";
 
-export function KanaCard({ kana, answer }: { kana: Hiragana; answer: string }) {
+export function KanaCard({ kana, answer }: { kana: Hiragana; answer: Romaji }) {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const addAnswer = useKanaStore((state) => state.addAnswer);
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value);
+    const value = e.currentTarget.value;
+    setValue(value);
+    addAnswer(answer, value === answer);
     const nextInput = inputRef.current?.nextElementSibling as HTMLElement;
     if (nextInput) {
       nextInput.scrollIntoView({ behavior: "smooth" });
