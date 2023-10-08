@@ -25,7 +25,8 @@ export function KanaCard({ kana, answer }: { kana: Hiragana; answer: string }) {
           ? "bg-emerald-300"
           : value !== "" && value !== answer
           ? "bg-red-300"
-          : null,
+          : "bg-primary",
+        "transition-all duration-300 focus-within:scale-105 focus-within:bg-yellow-500",
       )}
     >
       <CardHeader>
