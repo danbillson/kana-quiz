@@ -20,8 +20,9 @@ export const buttonOutline = `${buttonBase} border border-foreground text-foregr
 export const actionBar =
   "page-grid sticky bottom-0 z-10 border-t border-rule bg-background py-3";
 
-// Hairline grids: the container draws the top and left rules, each tile its
-// right and bottom. Clipping the tile background to its padding keeps the
-// rule visible between two inked tiles, and short rows leave no grey fill.
-export const tileGrid = "grid border-t border-l border-rule";
-export const tile = "border-r border-b border-rule bg-clip-padding";
+// Hairline grids: every tile draws all four rules and overlaps its
+// neighbours by a pixel, so short rows end cleanly. The rule is mixed
+// opaque against the page, so two overlapping rules don't darken.
+export const tileGrid = "grid pt-px pl-px";
+export const tile =
+  "-mt-px -ml-px border border-[color-mix(in_oklab,var(--foreground)_15%,var(--background))]";

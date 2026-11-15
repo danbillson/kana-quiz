@@ -83,7 +83,7 @@ export function Results() {
                       {glyph}
                     </span>
                     <span
-                      className={`${kicker} flex flex-wrap gap-x-2 normal-case`}
+                      className="flex flex-wrap gap-x-2 text-xs font-medium tracking-[0.08em]"
                     >
                       <span>{romaji}</span>
                       {!correct && (
