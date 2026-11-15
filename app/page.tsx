@@ -1,55 +1,41 @@
 "use client";
 
 import { KanaQuiz } from "@/components/kana-quiz";
-import KanaSelect from "@/components/kana-select";
+import { KanaSelect } from "@/components/kana-select";
 import { Results } from "@/components/results";
-import { Button } from "@/components/ui/button";
-import {
-  combinationHiraganaCategories,
-  dakutenHiraganaCategories,
-  mainHiraganaCategories,
-} from "@/lib/kana";
+import { SiteHeader } from "@/components/site-header";
 import { useKanaStore } from "@/lib/state";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
   const stage = useKanaStore((state) => state.stage);
-  const nextStage = useKanaStore((state) => state.nextStage);
-  const selectedKana = useKanaStore((state) => state.kana);
+  const mainRef = useRef<HTMLElement>(null);
+  const firstRender = useRef(true);
+
+  // A stage swap replaces the whole page, so start it from the top. The quiz
+  // focuses its first input itself; the others hand focus to <main>.
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    window.scrollTo({ top: 0 });
+    if (stage !== "quiz") mainRef.current?.focus({ preventScroll: true });
+  }, [stage]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="text-4xl font-bold tracking-widest">Kana Quiz</h1>
-
-      {stage === "select" && (
-        <>
-          <div className="grid grid-cols-3 gap-8">
-            <KanaSelect
-              title="main kana"
-              kanaCategories={mainHiraganaCategories}
-            />
-            <KanaSelect
-              title="dakuten kana"
-              kanaCategories={dakutenHiraganaCategories}
-            />
-            <KanaSelect
-              title="combination kana"
-              kanaCategories={combinationHiraganaCategories}
-            />
-          </div>
-
-          <Button
-            variant="secondary"
-            disabled={selectedKana.length === 0}
-            onClick={nextStage}
-          >
-            Start Quiz
-          </Button>
-        </>
-      )}
-
-      {stage === "quiz" && <KanaQuiz />}
-
-      {stage === "results" && <Results />}
-    </main>
+    <>
+      <SiteHeader stage={stage} />
+      <main
+        ref={mainRef}
+        id="main"
+        tabIndex={-1}
+        className="flex grow flex-col pt-16 outline-none md:pt-24"
+      >
+        {stage === "select" && <KanaSelect />}
+        {stage === "quiz" && <KanaQuiz />}
+        {stage === "results" && <Results />}
+      </main>
+    </>
   );
 }
