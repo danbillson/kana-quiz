@@ -1,59 +1,59 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ui-sdk adds a little behaviour CSS in this layer. Declaring it first means
+   everything below wins over it. */
+@layer ui-sdk;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 20 14.3% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
-    --primary: 47.9 95.8% 53.1%;
-    --primary-foreground: 26 83.3% 14.1%;
-    --secondary: 60 4.8% 95.9%;
-    --secondary-foreground: 24 9.8% 10%;
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
-    --accent: 60 4.8% 95.9%;
-    --accent-foreground: 24 9.8% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 20 5.9% 90%;
-    --input: 20 5.9% 90%;
-    --ring: 20 14.3% 4.1%;
-    --radius: 0.3rem;
-  }
+@import "tailwindcss";
+@import "./tokens.css";
 
-  .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 60 9.1% 97.8%;
-    --card: 20 14.3% 4.1%;
-    --card-foreground: 60 9.1% 97.8%;
-    --popover: 20 14.3% 4.1%;
-    --popover-foreground: 60 9.1% 97.8%;
-    --primary: 47.9 95.8% 53.1%;
-    --primary-foreground: 26 83.3% 14.1%;
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 60 9.1% 97.8%;
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 60 9.1% 97.8%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    --ring: 35.5 91.7% 32.9%;
+/* Kana fall through to Noto Sans JP, glyph by glyph. */
+@theme inline {
+  --font-display: var(--font-host-grotesk), var(--font-noto-jp);
+  --font-sans: var(--font-inter), var(--font-noto-jp);
+}
+
+/* Focus scrolling keeps the field clear of the sticky action bar. */
+html {
+  scroll-padding-bottom: 6rem;
+}
+
+/* Mouse only, so touch never gets a stuck hover. */
+@custom-variant hover-mouse {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+/* Each stage rises in once when it mounts. Order via --i (clamped in the
+   markup), extra offset via --d. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
-  body {
-    @apply bg-background text-foreground;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.rise {
+  animation: rise 700ms var(--ease-out-quint) both;
+  animation-delay: calc(var(--i, 0) * 60ms + var(--d, 0ms));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: fade 250ms ease both;
+    animation-delay: 0ms;
+  }
+}
+
+@media print {
+  .rise {
+    animation: none;
   }
 }

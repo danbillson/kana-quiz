@@ -240,7 +240,8 @@ export const hiraganaQuestions = {
   ma: hiraganaM,
   ya: hiraganaY,
   ra: hiraganaR,
-  wa: hiraganaW,
+  // ん has no row of its own, so it rides along with わ.
+  wa: { ...hiraganaW, ...hiraganaN2 },
   ga: hiraganaG,
   za: hiraganaZ,
   da: hiraganaD,
@@ -254,3 +255,15 @@ export const hiraganaQuestions = {
   mya: hiraganaMya,
   rya: hiraganaRya,
 } as const;
+
+export type Question = { kana: Hiragana; answer: Romaji };
+
+/** Every kana in the chosen rows, in table order. */
+export function questionsFor(categories: HiraganaCategory[]): Question[] {
+  return categories.flatMap((category) =>
+    Object.entries(hiraganaQuestions[category]).map(([answer, kana]) => ({
+      kana: kana as Hiragana,
+      answer: answer as Romaji,
+    })),
+  );
+}
